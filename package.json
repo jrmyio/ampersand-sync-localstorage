@@ -1,0 +1,21 @@
+{
+    "name": "ampersand-sync-localstorage",
+    "description": "Ampersand sync localstorage.",
+    "version": "1.0.0",
+    "author": "ConneXNL",
+    "bugs": {
+        "url": "https://github.com/ConneXNL/ampersand-sync-localstorage/issues"
+    },
+    "homepage": "https://github.com/ConneXNL/ampersand-sync-localstorage",
+    "keywords": [
+        "ampersand",
+        "sync",
+        "localstorage"
+    ],
+    "license": "MIT",
+    "main": "ampersand-sync-localstorage.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ConneXNL/ampersand-sync-localstorage"
+    }
+}
