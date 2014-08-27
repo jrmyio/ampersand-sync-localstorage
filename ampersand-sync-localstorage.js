@@ -11,7 +11,8 @@ module.exports = function (name) {
             records = (store && store.split(',')) || [];
 
         var result;
-        if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
+        options = typeof(options) === "undefined" ? {} : options;
+        if (options.data == null || options && model && (method === 'create' || method === 'update' || method === 'patch')) {
             model = options.attrs || model.toJSON(options);
         }
         try {
@@ -43,7 +44,11 @@ module.exports = function (name) {
                     }
                     break;
             }
-            localStorage.setItem(name, records.join(','));
+            if (records.length === 0){
+                localStorage.removeItem(name);
+            }else{
+                localStorage.setItem(name, records.join(','));
+            }
         } catch (ex) {
             if (options && options.error) options.error(result, 'error', ex.message)
             else throw ex;
