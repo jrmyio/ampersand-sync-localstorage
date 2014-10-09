@@ -12,7 +12,7 @@ module.exports = function (name) {
 
         var result;
         options = typeof(options) === "undefined" ? {} : options;
-        if (options.data == null || options && model && (method === 'create' || method === 'update' || method === 'patch')) {
+        if (options.data === null || options && model && (method === 'create' || method === 'update' || method === 'patch')) {
             model = options.attrs || model.toJSON(options);
         }
         try {
