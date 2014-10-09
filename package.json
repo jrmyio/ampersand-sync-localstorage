@@ -17,5 +17,8 @@
     "repository": {
         "type": "git",
         "url": "git://github.com/ConneXNL/ampersand-sync-localstorage"
-    }
+    },
+    "contributors": [
+        "Julian Diaz <jdiaz5513@gmail.com>"
+    ]
 }
