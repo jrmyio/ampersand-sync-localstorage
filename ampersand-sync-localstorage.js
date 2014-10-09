@@ -18,29 +18,29 @@ module.exports = function (name) {
         try {
             switch(method) {
                 case 'create':
-                    if (!model.id) model.id = guid();
-                    records.push(model.id.toString());
+                    if (!model.getId()) model[model.idAttribute || 'id'] = guid();
+                    records.push(model.getId().toString());
                 case 'update':
-                    if(records.indexOf(model.id.toString()) === -1) records.push(model.id.toString());
-                    localStorage.setItem(name + '-' + model.id, JSON.stringify(model));
+                    if(records.indexOf(model.getId().toString()) === -1) records.push(model.getId().toString());
+                    localStorage.setItem(name + '-' + model.getId(), JSON.stringify(model));
                     break;
                 case 'patch':
-                    result = localStorage.getItem(name + '-' + model.id);
+                    result = localStorage.getItem(name + '-' + model.getId());
                     result = result === null ? {} : JSON.parse(result);
                     for (var attrname in model) { result[attrname] = model[attrname]; }
-                    localStorage.setItem(name + '-' + model.id, JSON.stringify(model));
+                    localStorage.setItem(name + '-' + model.getId(), JSON.stringify(model));
                     break;
                 case 'delete':
-                    records.splice(records.indexOf(model.id.toString()), 1);
-                    localStorage.removeItem(name + '-' + model.id);
+                    records.splice(records.indexOf(model.getId().toString()), 1);
+                    localStorage.removeItem(name + '-' + model.getId());
                     break;
                 case 'read':
-                    if(!model.id) {
+                    if(!model.getId()) {
                         result = records
                             .map(function (id) { return JSON.parse(localStorage.getItem(name + '-' + id)); })
                             .filter(function (r) { return r !== null });
                     } else {
-                        result = JSON.parse(localStorage.getItem(name + '-' + model.id));
+                        result = JSON.parse(localStorage.getItem(name + '-' + model.getId()));
                     }
                     break;
             }
