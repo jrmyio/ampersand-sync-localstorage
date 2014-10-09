@@ -38,7 +38,7 @@ module.exports = function (name) {
                     if(!model.getId()) {
                         result = records
                             .map(function (id) { return JSON.parse(localStorage.getItem(name + '-' + id)); })
-                            .filter(function (r) { return r !== null });
+                            .filter(function (r) { return r !== null; });
                     } else {
                         result = JSON.parse(localStorage.getItem(name + '-' + model.getId()));
                     }
@@ -50,7 +50,7 @@ module.exports = function (name) {
                 localStorage.setItem(name, records.join(','));
             }
         } catch (ex) {
-            if (options && options.error) options.error(result, 'error', ex.message)
+            if (options && options.error) options.error(result, 'error', ex.message);
             else throw ex;
         }
         if (options && options.success) options.success(result, 'success');
