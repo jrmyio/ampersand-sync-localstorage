@@ -7,7 +7,7 @@ function guid() {
 module.exports = function (name) {
     return function (method, model, options) {
 
-        var modelId = model.getId(),
+        var modelId = (model.getId) ? model.getId() : undefined,
             idAttribute = model.idAttribute || 'id',
             store = localStorage.getItem(name),
             records = (store && store.split(',')) || [];
