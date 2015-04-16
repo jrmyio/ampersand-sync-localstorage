@@ -7,40 +7,42 @@ function guid() {
 module.exports = function (name) {
     return function (method, model, options) {
 
-        var store = localStorage.getItem(name),
+        var modelId = (model.getId) ? model.getId() : undefined,
+            idAttribute = model.idAttribute || 'id',
+            store = localStorage.getItem(name),
             records = (store && store.split(',')) || [];
 
         var result;
         options = typeof(options) === "undefined" ? {} : options;
-        if (options.data == null || options && model && (method === 'create' || method === 'update' || method === 'patch')) {
+        if (options.data === null || options && model && (method === 'create' || method === 'update' || method === 'patch')) {
             model = options.attrs || model.toJSON(options);
         }
         try {
             switch(method) {
                 case 'create':
-                    if (!model.id) model.id = guid();
-                    records.push(model.id.toString());
+                    if (!modelId) model[idAttribute] = guid();
+                    records.push(modelId.toString());
                 case 'update':
-                    if(records.indexOf(model.id.toString()) === -1) records.push(model.id.toString());
-                    localStorage.setItem(name + '-' + model.id, JSON.stringify(model));
+                    if(records.indexOf(modelId.toString()) === -1) records.push(modelId.toString());
+                    localStorage.setItem(name + '-' + modelId, JSON.stringify(model));
                     break;
                 case 'patch':
-                    result = localStorage.getItem(name + '-' + model.id);
+                    result = localStorage.getItem(name + '-' + modelId);
                     result = result === null ? {} : JSON.parse(result);
                     for (var attrname in model) { result[attrname] = model[attrname]; }
-                    localStorage.setItem(name + '-' + model.id, JSON.stringify(model));
+                    localStorage.setItem(name + '-' + modelId, JSON.stringify(model));
                     break;
                 case 'delete':
-                    records.splice(records.indexOf(model.id.toString()), 1);
-                    localStorage.removeItem(name + '-' + model.id);
+                    records.splice(records.indexOf(modelId.toString()), 1);
+                    localStorage.removeItem(name + '-' + modelId);
                     break;
                 case 'read':
-                    if(!model.id) {
+                    if(!modelId) {
                         result = records
                             .map(function (id) { return JSON.parse(localStorage.getItem(name + '-' + id)); })
-                            .filter(function (r) { return r !== null });
+                            .filter(function (r) { return r !== null; });
                     } else {
-                        result = JSON.parse(localStorage.getItem(name + '-' + model.id));
+                        result = JSON.parse(localStorage.getItem(name + '-' + modelId));
                     }
                     break;
             }
@@ -50,7 +52,7 @@ module.exports = function (name) {
                 localStorage.setItem(name, records.join(','));
             }
         } catch (ex) {
-            if (options && options.error) options.error(result, 'error', ex.message)
+            if (options && options.error) options.error(result, 'error', ex.message);
             else throw ex;
         }
         if (options && options.success) options.success(result, 'success');

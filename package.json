@@ -1,7 +1,7 @@
 {
     "name": "ampersand-sync-localstorage",
     "description": "Ampersand sync localstorage.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "ConneXNL",
     "bugs": {
         "url": "https://github.com/ConneXNL/ampersand-sync-localstorage/issues"
@@ -17,5 +17,8 @@
     "repository": {
         "type": "git",
         "url": "git://github.com/ConneXNL/ampersand-sync-localstorage"
-    }
+    },
+    "contributors": [
+        "Julian Diaz <jdiaz5513@gmail.com>"
+    ]
 }
